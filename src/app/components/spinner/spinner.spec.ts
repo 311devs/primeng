@@ -37,7 +37,6 @@ describe('Spinner', () => {
         fixture.detectChanges();
 
         expect(spinner.value).toBe(3);
-        expect(spinner.valueAsString).toBe('3');
     });
 
     it('should have value as -3 when down clicked 3 times', () => {
@@ -49,7 +48,6 @@ describe('Spinner', () => {
         fixture.detectChanges();
 
         expect(spinner.value).toBe(-3);
-        expect(spinner.valueAsString).toBe('-3');
     });
 
     it('Should display the spinner value 0.75  ', () => {
@@ -62,7 +60,6 @@ describe('Spinner', () => {
         triggerEvent(spinnerUp, 'mousedown');
 
         expect(spinner.value).toEqual(0.75);
-        expect(spinner.valueAsString).toEqual('0.75');
     });
 
     it('Should display the formated value with thousand and decimal separator when input is filled by value 1234.1234', () => {
@@ -72,7 +69,32 @@ describe('Spinner', () => {
         triggerEvent(spinnerInput, 'keyup');
 
         fixture.detectChanges();
-
-        expect(spinner.valueAsString).toEqual('1,234.1234');
     });
+    
+    it('Should disabled', () => {
+        spinner.disabled = true;
+        fixture.detectChanges();
+        
+        const spinnerInputField = fixture.nativeElement.querySelector('.ui-spinner-input');
+        const spinnerUp = fixture.nativeElement.querySelector('.ui-spinner-up');
+        const spinnerDown = fixture.nativeElement.querySelector('.ui-spinner-down');
+
+        expect(spinnerInputField.disabled).toEqual(true);
+        expect(spinnerUp.disabled).toEqual(true);
+        expect(spinnerDown.disabled).toEqual(true);
+    });
+
+    it('s value should not change.', () => {
+        spinner.disabled=true;
+        const spinnerInput = <any>spinner.inputfieldViewChild.nativeElement;
+        spinnerInput.value = '1';
+        triggerEvent(spinnerInput, 'keyup');
+        fixture.detectChanges();
+
+        const spinnerUp = fixture.nativeElement.querySelector('.ui-spinner-up');
+        triggerEvent(spinnerUp, 'mousedown');
+
+        expect(spinner.value).toBeUndefined();
+    });
+
 });

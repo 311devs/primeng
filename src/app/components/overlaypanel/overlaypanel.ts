@@ -3,8 +3,6 @@ import {CommonModule} from '@angular/common';
 import {DomHandler} from '../dom/domhandler';
 import {trigger,state,style,transition,animate,AnimationEvent} from '@angular/animations';
 
-// TODO: Remove and use primeng OverlayPanel after update >= 6.1.3
-
 @Component({
     selector: 'p-overlayPanel',
     template: `
@@ -43,58 +41,58 @@ export class OverlayPanel implements OnDestroy {
     @Input() style: any;
 
     @Input() styleClass: string;
-
+    
     @Input() appendTo: any;
 
     @Input() autoZIndex: boolean = true;
-
+    
     @Input() baseZIndex: number = 0;
 
     @Output() onShow: EventEmitter<any> = new EventEmitter();
 
     @Output() onHide: EventEmitter<any> = new EventEmitter();
-
+    
     container: HTMLDivElement;
 
     visible: boolean = false;
 
     documentClickListener: any;
-
+    
     selfClick: boolean;
-
+        
     target: any;
-
+    
     willHide: boolean;
-
+        
     targetClickEvent: boolean;
-
+    
     closeClick: boolean;
 
     documentResizeListener: any;
-
+    
     constructor(public el: ElementRef, public domHandler: DomHandler, public renderer: Renderer2, private cd: ChangeDetectorRef) {}
-
+        
     bindDocumentClickListener() {
         if (!this.documentClickListener && this.dismissable) {
             this.documentClickListener = this.renderer.listen('document', 'click', () => {
                 if (!this.selfClick && !this.targetClickEvent) {
                     this.hide();
                 }
-
+                
                 this.selfClick = false;
                 this.targetClickEvent = false;
                 this.cd.markForCheck();
             });
         }
     }
-
+    
     unbindDocumentClickListener() {
         if (this.documentClickListener) {
             this.documentClickListener();
             this.documentClickListener = null;
         }
     }
-
+    
     toggle(event, target?) {
         if (event.type === 'click') {
             this.targetClickEvent = true;
@@ -163,7 +161,7 @@ export class OverlayPanel implements OnDestroy {
     hide() {
         this.visible = false;
     }
-
+    
     onPanelClick(event) {
         if (this.closeClick) {
             this.hide();
@@ -187,7 +185,7 @@ export class OverlayPanel implements OnDestroy {
         this.documentResizeListener = this.onWindowResize.bind(this);
         window.addEventListener('resize', this.documentResizeListener);
     }
-
+    
     unbindDocumentResizeListener() {
         if (this.documentResizeListener) {
             window.removeEventListener('resize', this.documentResizeListener);
