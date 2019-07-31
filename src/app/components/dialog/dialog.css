@@ -39,6 +39,7 @@
 .ui-dialog .ui-dialog-titlebar-icon span {
     display: block;
     margin: 0;
+    font-size: 1.25em;
 }
 
 .ui-dialog-footer {
