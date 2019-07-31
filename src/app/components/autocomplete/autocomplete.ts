@@ -254,7 +254,11 @@ export class AutoComplete implements AfterViewInit,AfterViewChecked,DoCheck,Cont
     }
 
     showResetButton() {
-        return (!this.multiple && (this.value && this.value.length) || (this.inputEL && this.inputEL.nativeElement.value.length));
+        return (!this.forceSelection && (
+            !this.multiple && (this.value && this.value.length)
+            ||
+            (this.inputEL && this.inputEL.nativeElement.value.length)
+        ));
     }
 
     handleSuggestionsChange() {
