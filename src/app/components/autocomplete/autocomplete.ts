@@ -169,8 +169,6 @@ export class AutoComplete implements AfterViewInit,AfterViewChecked,DoCheck,Cont
 
     @Input() resetFilterTitle: string = 'Reset filter';
 
-    @Input() optionsName: string;
-
     onModelChange: Function = () => {
     };
 
